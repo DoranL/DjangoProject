@@ -1,0 +1,128 @@
+[
+  {
+    "model": "polls.genre",
+    "fields": {
+      "name": "sf"
+    }
+  },
+  {
+    "model": "polls.genre",
+    "fields": {
+      "name": "가족"
+    }
+  },
+  {
+    "model": "polls.genre",
+    "fields": {
+      "name": "공포"
+    }
+  },
+  {
+    "model": "polls.genre",
+    "fields": {
+      "name": "드라마"
+    }
+  },
+  {
+    "model": "polls.genre",
+    "fields": {
+      "name": "로맨스"
+    }
+  },
+  {
+    "model": "polls.genre",
+    "fields": {
+      "name": "먼치킨"
+    }
+  },
+  {
+    "model": "polls.genre",
+    "fields": {
+      "name": "모험"
+    }
+  },
+  {
+    "model": "polls.genre",
+    "fields": {
+      "name": "미스테리"
+    }
+  },
+  {
+    "model": "polls.genre",
+    "fields": {
+      "name": "범죄"
+    }
+  },
+  {
+    "model": "polls.genre",
+    "fields": {
+      "name": "서스펜스"
+    }
+  },
+  {
+    "model": "polls.genre",
+    "fields": {
+      "name": "스포츠"
+    }
+  },
+  {
+    "model": "polls.genre",
+    "fields": {
+      "name": "시대"
+    }
+  },
+  {
+    "model": "polls.genre",
+    "fields": {
+      "name": "옴니버스"
+    }
+  },
+  {
+    "model": "polls.genre",
+    "fields": {
+      "name": "요괴"
+    }
+  },
+  {
+    "model": "polls.genre",
+    "fields": {
+      "name": "이세계"
+    }
+  },
+  {
+    "model": "polls.genre",
+    "fields": {
+      "name": "일상"
+    }
+  },
+  {
+    "model": "polls.genre",
+    "fields": {
+      "name": "전투"
+    }
+  },
+  {
+    "model": "polls.genre",
+    "fields": {
+      "name": "코미디"
+    }
+  },
+  {
+    "model": "polls.genre",
+    "fields": {
+      "name": "판타지"
+    }
+  },
+  {
+    "model": "polls.genre",
+    "fields": {
+      "name": "학원"
+    }
+  },
+  {
+    "model": "polls.genre",
+    "fields": {
+      "name": "추가"
+    }
+  }
+]
