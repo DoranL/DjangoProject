@@ -1,12 +1,11 @@
 # DjangoProject
 
 ## 가상환경 만들기 (터미널에 입력)
-- py -m venv venv
-- venv\Scripts\activate
-
-- py pip -m install django
-- py pip -m install python-steam-api
-- py pip -m install beautifulsoup4
+1. py -m venv venv
+2. venv\Scripts\activate
+3. py pip -m install django
+4. py pip -m install python-steam-api
+5. py pip -m install beautifulsoup4
 
 ---
 
