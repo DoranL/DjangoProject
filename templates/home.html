@@ -95,14 +95,14 @@
         <div class="container2">
             <h2>게임 순위</h2>
             <div class="row">
-                {% for steamdb_gameinfo in info_list %}
+                {% for rank in object_list %}
                 <div class="col">
                     <div class="box">
                         <div class="card shadow">
-                            <a href="http://127.0.0.1:8000/index/">
+                            <a href="{% url 'detail' rank.app.id %}">
                                 <li>
-                                    <img src="{{ steamdb_gameinfo.image }}" alt=""/>
-                                    <span onclick="window.location.href='http://127.0.0.1:8000/index/'">{{ steamdb_gameinfo.appid }}</span>
+                                    <img src="{{ rank.app.image }}" alt=""/>
+                                    <span>{{ rank.app.name }}</span>
                                 </li>
                             </a>
                             <!-- <div class="box-body">

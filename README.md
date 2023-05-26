@@ -1,4 +1,4 @@
-v# DjangoProject
+# DjangoProject
 
 ## 가상환경 만들기 (터미널에 입력)
 1. py -m venv venv
