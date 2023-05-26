@@ -1,0 +1,124 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>게임 순위</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            font-weight: bold;
+        }
+
+        .container {
+            max-width: 1500px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .container2{
+            max-width: 1500px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background-color: #040303;
+            color: white;
+            padding: 15px;
+        }
+
+        .navbar ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .navbar li {
+            display: inline-block;
+            margin-right: 100px;
+            font-size: 18px;
+        }
+
+        .navbar li a {
+            color: white;
+            text-decoration: none;
+            padding: 5px 10px;
+        }
+
+        .navbar li a:hover {
+            background-color: #666;
+        }
+
+        .row .col {
+                width: calc(100% / 3); /* 각 col 요소의 너비를 1/3로 설정 */
+                float: left; /* col 요소를 왼쪽으로 정렬 */
+                box-sizing: border-box; /* 요소의 경계 상자 크기를 포함하여 너비 설정 */
+                padding: 10px; /* col 요소 사이의 간격을 설정 */
+        }
+        .btn-group{
+            margin-left: 350px;
+        }
+        .text{
+            margin-left: 390px;
+        }
+        @media (max-width: 768px) {
+            .row .col {
+                width: 100%; /* 반응형 디자인에서는 화면 크기가 작을 때 col 요소를 한 줄에 하나씩 배치 */
+                float: none; /* float 제거 */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="navbar">
+                <nav>
+                    <ul>
+                        <li><a href="{% url 'home' %}">Stream DB</a></li>
+                        <li><a href="{% url 'rank' %}">게임 순위</a></li>
+                        <li><a href="{% url 'sale' %}">인기 세일</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+
+        <div class="container2" style="text-align: center; margin-top: 28px;">
+            <h3>게임 정보를 쉽고 빠르게 전달하는 </h3>
+        </div>
+
+        <div class="container2">
+            <h2>게임 순위</h2>
+            <div class="row">
+                {% for steamdb_gameinfo in info_list %}
+                <div class="col">
+                    <div class="box">
+                        <div class="card shadow">
+                            <a href="https://steamdb.Info/app/{{ steamdb_gameinfo.appid }}/charts/">
+                                <li>
+                                    <img src="{{ steamdb_gamename.image }}" alt=""/> {{ steamdb_gameinfo.appid }}
+                                </li>
+                            </a>
+                            <!-- <div class="box-body">
+                                <p class="box-text">{{ game.description }}</p>
+                                <div>
+                                    <div class="btn-group">
+                                        <button type="button" class="btn view">View</button>
+                                        <button type="button" class="btn edit">Edit</button>
+                                    </div>
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>
