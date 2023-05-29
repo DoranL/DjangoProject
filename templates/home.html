@@ -105,7 +105,7 @@
                         <li><a href="{% url 'sale' %}">인기 세일</a></li>
                     
                         <form class="search" background-color: #333333; action="{% url 'search' %}" method="GET" style="margin-right: -460px;">
-                            <input type="text" name="query" placeholder="검색어를 입력하세요" style="background-color: #333333;"/>
+                            <input type="text" name="q" placeholder="검색어를 입력하세요" style="background-color: #333333;"/>
                             <button type="submit">검색</button>
                         </form>
                     </ul>
@@ -160,11 +160,7 @@
                         <div class="card shadow">
                             <a href="{% url 'detail' rank.app.id %}">
                                 <li style="list-style: none;">
-<<<<<<< HEAD
-                                    <img style="width: 100%; height: auto;" src="https://cdn.cloudflare.steamstatic.com/steam/apps/730/header.jpg?t=1683841724" alt=""/>
-=======
-                                    <img src="{{ rank.app.image }}" alt=""/>
->>>>>>> c7975edda01b3fc00b5bec5b6ff45d76c8fd47d8
+                                    <img style="width: 100%; height: auto;" src="{% static 'default_header.jpg' %}" alt=""/>
                                     <span style="color: #040303";>{{ rank.app.name }}</span>
                                 </li>
                             </a>

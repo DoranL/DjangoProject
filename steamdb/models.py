@@ -8,9 +8,6 @@ class App(models.Model):
 
     id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=100)
-    price = models.FloatField(null=True)
-    release_date = models.DateField(null=True)
-    image = models.TextField(null=True)
 
 
 class Rank(models.Model):

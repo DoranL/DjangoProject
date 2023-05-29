@@ -102,7 +102,7 @@
                         <li><a href="{% url 'sale' %}">인기 세일</a></li>
                     
                         <form class="search" action="{% url 'search' %}" method="GET" style="margin-right: -460px;">
-                            <input type="text" name="query" placeholder="검색어를 입력하세요" style="background-color: #333333;"/>
+                            <input type="text" name="q" placeholder="검색어를 입력하세요" style="background-color: #333333;"/>
                             <button type="submit">검색</button>
                         </form>
                     </ul>
@@ -127,7 +127,7 @@
                             <a href="{% url 'detail' app.id %}">
                                 <div style="display: flex; align-items: center;">
                                     <span style="color: #040303; margin-left: 20px;">{{ app.id }}</span>
-                                    <img style="width: 80px; height: 80px; margin-right: 10px; margin-left: 20px;" src="https://cdn.cloudflare.steamstatic.com/steam/apps/730/header.jpg?t=1683841724" alt=""/>
+                                    <img style="width: 80px; height: 80px; margin-right: 10px; margin-left: 20px;" src="{% static 'default_header.jpg' %}" alt=""/>
                                     <span style="color: #040303;">{{ app.name }}</span>
                                 </div>
                             </a>

@@ -15,7 +15,7 @@
     {% for app in object_list %}
     <a href="{% url 'detail' app.id %}">
         <li>
-            <img src={{app.image}} alt="썸네일"/> {{app.name}}, {% if app.price <= 0 %} 무료 {% else %} {{app.price}}원 {% endif %}
+            {{ app.id }}: {{app.name}}
         </li>   
     </a>
     {% empty %}
