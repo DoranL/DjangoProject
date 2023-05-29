@@ -55,16 +55,33 @@
         }
 
         .row .col {
-                width: calc(100% / 3); /* 각 col 요소의 너비를 1/3로 설정 */
-                float: left; /* col 요소를 왼쪽으로 정렬 */
-                box-sizing: border-box; /* 요소의 경계 상자 크기를 포함하여 너비 설정 */
-                padding: 10px; /* col 요소 사이의 간격을 설정 */
+            width: 1500px; /* 각 col 요소의 너비를 1/3로 설정 */
+            float: left; /* col 요소를 왼쪽으로 정렬 */
+            box-sizing: border-box; /* 요소의 경계 상자 크기를 포함하여 너비 설정 */
+            padding-bottom: 10px; /*col 요소 사이의 간격을 설정 */
+            padding-left: 0px;
         }
         .btn-group{
-            margin-left: 350px;
+            margin-left: 280px;
         }
         .text{
             margin-left: 390px;
+        }
+        .search {
+            display: inline-flex;
+            margin-left: 160px;
+            border: 1px solid white;  /* 하얀색 테두리 추가 */
+            border-radius: 4px;  /* 테두리의 모서리를 둥글게 설정 */
+        }
+
+        .box:hover {
+            background-color: #d1cece !important;
+        }
+
+        .search input[type="text"],
+        .search button[type="submit"] {
+            display: inline-block;
+            vertical-align: middle;
         }
         @media (max-width: 768px) {
             .row .col {
@@ -80,36 +97,43 @@
             <div class="navbar">
                 <nav>
                     <ul>
-                        <li><a href="{% url 'home' %}">Stream DB</a></li>
+                        <li><a href="{% url 'home' %}">Steam forest</a></li>
                         <li><a href="{% url 'rank' %}">게임 순위</a></li>
                         <li><a href="{% url 'sale' %}">인기 세일</a></li>
+                    
+                        <form class="search" action="{% url 'search' %}" method="GET" style="margin-right: -460px;">
+                            <input type="text" name="query" placeholder="검색어를 입력하세요" style="background-color: #333333;"/>
+                            <button type="submit">검색</button>
+                        </form>
                     </ul>
                 </nav>
             </div>
         </header>
 
-        <div class="container2" style="text-align: center; margin-top: 28px;">
-            <h3>게임 정보를 쉽고 빠르게 전달하는 </h3>
+        <div class="container2" style="text-align: center; margin-top: 1px;">
+            <video autoplay loop muted style="width: 1500px; margin: -20px;">
+                <source src="https://cdn.cloudflare.steamstatic.com/steam/clusters/frontpage/c323b79f77fa373a52f858aa/webm_page_bg_koreana.webm?t=1685039245" type="video/webm">
+                Your browser does not support the video tag.
+            </video>
         </div>
 
         <div class="container2">
-            <h2>게임 순위</h2>
+            <h2>인기 세일</h2>
             <div class="row">
-                {% for steamdb_gameinfo in info_list %}
+                {% for app in object_list|slice:":100" %}   
                 <div class="col">
-                    <div class="box">
+                    <div class="box" style="border: 1px solid #ccc; padding: 10px; background-color: #f5f5f5;">
                         <div class="card shadow">
-                            <a href="https://steamdb.Info/app/{{ steamdb_gameinfo.appid }}/charts/">
-                                <li>
-                                    <img src="{{ steamdb_gameinfo.image }}" alt=""/> {{ steamdb_gameinfo.appid }}
-                                </li>
+                            <a href="{% url 'detail' app.id %}">
+                                <div style="display: flex; align-items: center;">
+                                    <span style="color: #040303; margin-left: 20px;">{{ app.id }}</span>
+                                    <img style="width: 80px; height: 80px; margin-right: 10px; margin-left: 20px;" src="https://cdn.cloudflare.steamstatic.com/steam/apps/730/header.jpg?t=1683841724" alt=""/>
+                                    <span style="color: #040303;">{{ app.name }}</span>
+                                </div>
                             </a>
                             <!-- <div class="box-body">
-                                <p class="box-text">{{ game.description }}</p>
-                                <div>
                                     <div class="btn-group">
-                                        <button type="button" class="btn view">View</button>
-                                        <button type="button" class="btn edit">Edit</button>
+                                        <p style="display: inline; width: 200px; text-align: right;">최대 접속자: {{ rank.peak_in_game }}</p>
                                     </div>
                                 </div>
                             </div> -->

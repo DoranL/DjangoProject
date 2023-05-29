@@ -34,7 +34,7 @@ class HomeView(generic.ListView):
 
 
 class RankView(generic.ListView):
-    model = App
+    model = Rank
     template_name = "rank.html"
 
 
