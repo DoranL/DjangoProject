@@ -66,6 +66,7 @@
         .text{
             margin-left: 390px;
         }
+<<<<<<< HEAD
         .search {
             display: inline-flex;
             margin-left: 160px;
@@ -82,6 +83,9 @@
             display: inline-block;
             vertical-align: middle;
         }
+=======
+
+>>>>>>> c7975edda01b3fc00b5bec5b6ff45d76c8fd47d8
         @media (max-width: 768px) {
             .row .col {
                 width: 100%; /* 반응형 디자인에서는 화면 크기가 작을 때 col 요소를 한 줄에 하나씩 배치 */
@@ -156,7 +160,11 @@
                         <div class="card shadow">
                             <a href="{% url 'detail' rank.app.id %}">
                                 <li style="list-style: none;">
+<<<<<<< HEAD
                                     <img style="width: 100%; height: auto;" src="https://cdn.cloudflare.steamstatic.com/steam/apps/730/header.jpg?t=1683841724" alt=""/>
+=======
+                                    <img src="{{ rank.app.image }}" alt=""/>
+>>>>>>> c7975edda01b3fc00b5bec5b6ff45d76c8fd47d8
                                     <span style="color: #040303";>{{ rank.app.name }}</span>
                                 </li>
                             </a>
