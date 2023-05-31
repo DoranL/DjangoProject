@@ -1,8 +1,10 @@
 {% load static %}
 <!DOCTYPE html>
-<html>
 <head>
     <title>게임 순위</title>
+    <meta charset="UTF-8">
+    <title>$Title$</title>
+    <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -94,12 +96,6 @@
             }
         }
     </style>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-    <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
 </head>
 <body>
     <div class="container">
@@ -110,8 +106,8 @@
                         <li><a href="{% url 'home' %}">Steam forest</a></li>
                         <li><a href="{% url 'rank' %}">게임 순위</a></li>
                         <li><a href="{% url 'sale' %}">인기 세일</a></li>
-                    
-                        <form class="search" background-color: #333333; action="{% url 'search' %}" method="GET" style="margin-right: -460px;">
+
+                        <form class="search" style="background-color: #333333;" action="{% url 'search' %}" method="GET" style="margin-right: -460px;">
                             <input type="text" name="q" placeholder="검색어를 입력하세요" style="background-color: #333333;"/>
                             <button type="submit">검색</button>
                         </form>
@@ -132,8 +128,8 @@
                             {% if json_data.is_free %}
                                 <h4>가격: 무료</h4>
                             {% elif json_data.price_overview.discount_percent > 0 %}
-                                <h4> 
-                                    <del>{{ json_data.price_overview.initial_formatted }}</del>
+                                <h4>
+                                    <s>{{ json_data.price_overview.initial_formatted }}</s>
                                     → <b>{{ json_data.price_overview.final_formatted }}</b>
                                     ({{ json_data.price_overview.discount_percent }}%)
                                 </h4>

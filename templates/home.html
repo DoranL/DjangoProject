@@ -3,6 +3,9 @@
 <html>
 <head>
     <title>게임 순위</title>
+    <meta charset="UTF-8">
+    <title>$Title$</title>
+    <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -12,13 +15,17 @@
             font-weight: bold;
         }
 
+        li {
+            list-style: none;
+        }
+
         .container {
             max-width: 1500px;
             margin: 0 auto;
             padding: 20px;
         }
 
-        .container2{
+        .container2 {
             max-width: 1500px;
             margin: 0 auto;
             padding: 20px;
@@ -55,23 +62,25 @@
         }
 
         .row .col {
-                width: calc(100% / 3); /* 각 col 요소의 너비를 1/3로 설정 */
-                float: left; /* col 요소를 왼쪽으로 정렬 */
-                box-sizing: border-box; /* 요소의 경계 상자 크기를 포함하여 너비 설정 */
-                padding: 10px; /* col 요소 사이의 간격을 설정 */
+            width: calc(100% / 3); /* 각 col 요소의 너비를 1/3로 설정 */
+            float: left; /* col 요소를 왼쪽으로 정렬 */
+            box-sizing: border-box; /* 요소의 경계 상자 크기를 포함하여 너비 설정 */
+            padding: 10px; /* col 요소 사이의 간격을 설정 */
         }
-        .btn-group{
+
+        .btn-group {
             margin-left: 280px;
         }
-        .text{
+
+        .text {
             margin-left: 390px;
         }
 
         .search {
             display: inline-flex;
             margin-left: 160px;
-            border: 1px solid white;  /* 하얀색 테두리 추가 */
-            border-radius: 4px;  /* 테두리의 모서리를 둥글게 설정 */
+            border: 1px solid white; /* 하얀색 테두리 추가 */
+            border-radius: 4px; /* 테두리의 모서리를 둥글게 설정 */
         }
 
         .box:hover {
@@ -93,73 +102,75 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <div class="navbar">
-                <nav>
-                    <ul>
-                        <li><a href="{% url 'home' %}">Steam forest</a></li>
-                        <li><a href="{% url 'rank' %}">게임 순위</a></li>
-                        <li><a href="{% url 'sale' %}">인기 세일</a></li>
-                    
-                        <form class="search" background-color: #333333; action="{% url 'search' %}" method="GET" style="margin-right: -460px;">
-                            <input type="text" name="q" placeholder="검색어를 입력하세요" style="background-color: #333333;"/>
-                            <button type="submit">검색</button>
-                        </form>
-                    </ul>
-                </nav>
-            </div>
-        </header>
+<div class="container">
+    <header>
+        <div class="navbar">
+            <nav>
+                <ul>
+                    <li><a href="{% url 'home' %}">Steam forest</a></li>
+                    <li><a href="{% url 'rank' %}">게임 순위</a></li>
+                    <li><a href="{% url 'sale' %}">인기 세일</a></li>
 
-        <div class="container2" style="text-align: center; margin-top: 2px; background-color: #040303; height: 300px; display: flex; flex-direction: column; justify-content: center;">
-            <h1 style="color: #ccc;">Steam Big Sale Countdown</h1>
-            <div id="sale-timer" style="font-size: 24px; font-weight: bold; color: orangered;"></div>
+                    <form class="search" style="background-color: #333333;" action="{% url 'search' %}" method="GET"
+                          style="margin-right: -460px;">
+                        <input type="text" name="q" placeholder="검색어를 입력하세요" style="background-color: #333333;"/>
+                        <button type="submit">검색</button>
+                    </form>
+                </ul>
+            </nav>
         </div>
-        
+    </header>
 
-        <script>
-            // 스팀 세일 타이머 표시 함수
-            function updateSaleTimer() {
-                // 타이머 표시할 요소 선택
-                const timerElement = document.getElementById('sale-timer');
-                
-                // 타이머 정보 가져오기
-                const saleEndTime = 1688058000000; // 예시: 스팀 세일 종료 시간
+    <div class="container2"
+         style="text-align: center; margin-top: 2px; background-color: #040303; height: 300px; display: flex; flex-direction: column; justify-content: center;">
+        <h1 style="color: #ccc;">Steam Big Sale Countdown</h1>
+        <div id="sale-timer" style="font-size: 24px; font-weight: bold; color: orangered;"></div>
+    </div>
 
-                // 타이머 업데이트
-                setInterval(() => {
-                    const currentTime = new Date().getTime(); // 현재 시간
-                    const timeRemaining = saleEndTime - currentTime; // 남은 시간
 
-                    // 시간, 분, 초 계산
-                    const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
-                    const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                    const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
-                    const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+    <script>
+        // 스팀 세일 타이머 표시 함수
+        function updateSaleTimer() {
+            // 타이머 표시할 요소 선택
+            const timerElement = document.getElementById('sale-timer');
 
-                    // 타이머 텍스트 생성
-                    const timerText = `${days}일 ${hours}시간 ${minutes}분 ${seconds}초`;
+            // 타이머 정보 가져오기
+            const saleEndTime = 1688058000000; // 예시: 스팀 세일 종료 시간
 
-                    // 타이머 표시
-                    timerElement.textContent = timerText;
-                }, 1000); // 1초마다 업데이트
-            }
+            // 타이머 업데이트
+            setInterval(() => {
+                const currentTime = new Date().getTime(); // 현재 시간
+                const timeRemaining = saleEndTime - currentTime; // 남은 시간
 
-            // 페이지 로드 후 스팀 세일 타이머 업데이트 함수 호출
-            window.onload = updateSaleTimer;
-        </script>
+                // 시간, 분, 초 계산
+                const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
 
-        <div class="container2">
-            <h2>게임 순위</h2>
-            <div class="row">
-                {% for rank in object_list %}
+                // 타이머 텍스트 생성
+                const timerText = `${days}일 ${hours}시간 ${minutes}분 ${seconds}초`;
+
+                // 타이머 표시
+                timerElement.textContent = timerText;
+            }, 1000); // 1초마다 업데이트
+        }
+
+        // 페이지 로드 후 스팀 세일 타이머 업데이트 함수 호출
+        window.onload = updateSaleTimer;
+    </script>
+    <div class="container2">
+        <h2>게임 순위</h2>
+        <div class="row">
+            {% for rank in object_list %}
                 <div class="col">
                     <div class="box" style="border: 1px solid #ccc; padding: 10px; background-color: #f5f5f5;">
                         <div class="card shadow">
                             <a href="{% url 'detail' rank.app.id %}">
                                 <li style="list-style: none;">
-                                    <img style="width: 100%; height: auto;" src="{% static 'default_header.jpg' %}" alt=""/>
-                                    <span style="color: #040303";>{{ rank.app.name }}</span>
+                                    <img style="width: 100%; height: auto;" src="{% static 'default_header.jpg' %}"
+                                         alt=""/>
+                                    <span style="color: #040303" ;>{{ rank.app.name }}</span>
                                 </li>
                             </a>
                             <div class="box-body">
@@ -170,16 +181,91 @@
                                 {% endif %}
                                 <div>
                                     <div class="btn-group">
-                                        <p style="display: inline; width: 200px; text-align: right;">최대 접속자: {{rank.peak_in_game}}</p>
+                                        <p style="display: inline; width: 200px; text-align: right;">최대
+                                            접속자: {{ rank.peak_in_game }}</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                {% endfor %}
-            </div>
+            {% endfor %}
         </div>
     </div>
+    <div class="container">
+        <div class="container2"
+             style="text-align: center; margin-top: 2px; background-color: #040303; height: 300px; display: flex; flex-direction: column; justify-content: center;">
+            <h1 style="color: #ccc;">Steam Big Sale Countdown</h1>
+            <div id="sale-timer" style="font-size: 24px; font-weight: bold; color: orangered;"></div>
+        </div>
+    </div>
+
+
+    <script>
+        // 스팀 세일 타이머 표시 함수
+        function updateSaleTimer() {
+            // 타이머 표시할 요소 선택
+            const timerElement = document.getElementById('sale-timer');
+
+            // 타이머 정보 가져오기
+            const saleEndTime = 1688058000000; // 예시: 스팀 세일 종료 시간
+
+            // 타이머 업데이트
+            setInterval(() => {
+                const currentTime = new Date().getTime(); // 현재 시간
+                const timeRemaining = saleEndTime - currentTime; // 남은 시간
+
+                // 시간, 분, 초 계산
+                const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+
+                // 타이머 텍스트 생성
+                const timerText = `${days}일 ${hours}시간 ${minutes}분 ${seconds}초`;
+
+                // 타이머 표시
+                timerElement.textContent = timerText;
+            }, 1000); // 1초마다 업데이트
+        }
+
+        // 페이지 로드 후 스팀 세일 타이머 업데이트 함수 호출
+        window.onload = updateSaleTimer;
+    </script>
+
+    <div class="container2">
+        <h2>게임 순위</h2>
+        <div class="row">
+            {% for rank in object_list %}
+                <div class="col">
+                    <div class="box" style="border: 1px solid #ccc; padding: 10px; background-color: #f5f5f5;">
+                        <div class="card shadow">
+                            <a href="{% url 'detail' rank.app.id %}">
+                                <li style="list-style: none;">
+                                    <img style="width: 100%; height: auto;" src="{% static 'default_header.jpg' %}"
+                                         alt=""/>
+                                    <span style="color: #040303" ;>{{ rank.app.name }}</span>
+                                </li>
+                            </a>
+                            <div class="box-body">
+                                {% if rank.app.description %}
+                                    <p class="box-text">{{ rank.app.description }}</p>
+                                {% else %}
+                                    <p class="box-text">No description available.</p>
+                                {% endif %}
+                                <div>
+                                    <div class="btn-group">
+                                        <p style="display: inline; width: 200px; text-align: right;">최대
+                                            접속자: {{ rank.peak_in_game }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
 </body>
 </html>

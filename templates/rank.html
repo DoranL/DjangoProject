@@ -3,6 +3,9 @@
 <html>
 <head>
     <title>게임 순위</title>
+    <meta charset="UTF-8">
+    <title>$Title$</title>
+    <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -12,6 +15,9 @@
             font-weight: bold;
         }
 
+        li{
+            list-style: none;
+        }
         .container {
             max-width: 1500px;
             margin: 0 auto;
@@ -66,6 +72,7 @@
         .text{
             margin-left: 390px;
         }
+
         .search {
             display: inline-flex;
             margin-left: 160px;
@@ -82,6 +89,7 @@
             display: inline-block;
             vertical-align: middle;
         }
+
         @media (max-width: 768px) {
             .row .col {
                 width: 100%; /* 반응형 디자인에서는 화면 크기가 작을 때 col 요소를 한 줄에 하나씩 배치 */
@@ -91,42 +99,43 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <div class="navbar">
-                <nav>
-                    <ul>
-                        <li><a href="{% url 'home' %}">Steam forest</a></li>
-                        <li><a href="{% url 'rank' %}">게임 순위</a></li>
-                        <li><a href="{% url 'sale' %}">인기 세일</a></li>
-                    
-                        <form class="search" action="{% url 'search' %}" method="GET" style="margin-right: -460px;">
-                            <input type="text" name="q" placeholder="검색어를 입력하세요" style="background-color: #333333;"/>
-                            <button type="submit">검색</button>
-                        </form>
-                    </ul>
-                </nav>
-            </div>
-        </header>
+<div class="container">
+    <header>
+        <div class="navbar">
+            <nav>
+                <ul>
+                    <li><a href="{% url 'home' %}">Steam forest</a></li>
+                    <li><a href="{% url 'rank' %}">게임 순위</a></li>
+                    <li><a href="{% url 'sale' %}">인기 세일</a></li>
 
-        <div style="text-align: center; margin-top: 28px;">
-            <a href="% url 'detail' object_list.0.app.id %">
-                <img style="width: 1000px; height: 400px;" src="{% static 'default_header.jpg' %}" alt=""/>
-            </a>
-            <h2 style="color: white; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">{{ object_list.0.app.name }}</h2>
+                    <form class="search" action="{% url 'search' %}" method="GET" style="margin-right: -460px;">
+                        <input type="text" name="q" placeholder="검색어를 입력하세요" style="background-color: #333333;"/>
+                        <button type="submit">검색</button>
+                    </form>
+                </ul>
+            </nav>
         </div>
+    </header>
 
-        <div class="container2">
-            <h2>게임 순위</h2>
-            <div class="row">
-                {% for rank in object_list %}
+    <div style="text-align: center; margin-top: 28px;">
+        <a href={% url 'detail' object_list.0.app.id %}>
+            <img style="width: 1000px; height: 400px;" src="{% static 'default_header.jpg' %}" alt=""/>
+        </a>
+        <h2 style="color: white; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">{{ object_list.0.app.name }}</h2>
+    </div>
+
+    <div class="container2">
+        <h2>게임 순위</h2>
+        <div class="row">
+            {% for rank in object_list %}
                 <div class="col">
                     <div class="box" style="border: 1px solid #ccc; padding: 10px; background-color: #f5f5f5;">
                         <div class="card shadow">
                             <a href="{% url 'detail' rank.app.id %}">
                                 <li style="list-style: none;">
-                                    <img style="width: 100%; height: auto;" src="{% static 'default_header.jpg' %}" alt=""/>
-                                    <span style="color: #040303";>{{ rank.app.name }}</span>
+                                    <img style="width: 100%; height: auto;" src="{% static 'default_header.jpg' %}"
+                                         alt=""/>
+                                    <span style="color: #040303" ;>{{ rank.app.name }}</span>
                                 </li>
                             </a>
                             <div class="box-body">
@@ -137,16 +146,17 @@
                                 {% endif %}
                                 <div>
                                     <div class="btn-group">
-                                        <p style="display: inline; width: 200px; text-align: right;">최대 접속자: {{rank.peak_in_game}}</p>
+                                        <p style="display: inline; width: 200px; text-align: right;">최대
+                                            접속자: {{ rank.peak_in_game }}</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                {% endfor %}
-            </div>
+            {% endfor %}
         </div>
     </div>
+</div>
 </body>
 </html>
