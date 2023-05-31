@@ -33,6 +33,7 @@ class SearchView(generic.ListView):
 class DetailView(generic.TemplateView):
     template_name = "detail.html"
     # 데이터 불러오기
+
     def get(self, request, pk, **kwargs):
         context = super().get_context_data(**kwargs)
         user = steam.apps.get_app_details(pk)
@@ -43,6 +44,7 @@ class DetailView(generic.TemplateView):
         except:
             context = {'json_data': json.loads(user)[str(pk)]}
         return render(request, 'detail.html', context)
+
 
 class HomeView(generic.ListView):
     model = Rank

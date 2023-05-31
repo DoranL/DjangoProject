@@ -109,8 +109,11 @@
             </div>
         </header>
 
-        <div class="container2" style="text-align: center; margin-top: 28px;">
-            <h2>스팀의 모든 게임</h2>
+        <div style="text-align: center; margin-top: 28px;">
+            <a href="% url 'detail' object_list.0.app.id %">
+                <img style="width: 1000px; height: 400px;" src="{% static 'default_header.jpg' %}" alt=""/>
+            </a>
+            <h2 style="color: white; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">{{ object_list.0.app.name }}</h2>
         </div>
 
         <div class="container2">
