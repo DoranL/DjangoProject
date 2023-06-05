@@ -1,21 +1,31 @@
-from django.db.models import Q
-from django.shortcuts import render, get_object_or_404
-from django.views import generic
-from .models import App, Rank
-from django.http import HttpResponse, JsonResponse
-
-from steam import Steam
-from decouple import config
 import json
+import requests
 
-KEY = config("STEAM_API_KEY")
-steam = Steam(KEY)
+from django.db.models import Q
+from django.shortcuts import render
+from django.views import generic
+from django.core.paginator import Paginator
+from .models import App, Rank
 
 
 # Create your views here.
 class IndexView(generic.ListView):
     model = App
     template_name = "index.html"
+    paginate_by = 10
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        queryset = self.get_queryset()  # 모델의 쿼리셋 가져오기
+        paginator = Paginator(queryset, self.paginate_by)  # Paginator 객체 생성
+
+        page_number = self.request.GET.get('p')  # 'p'라는 이름의 페이지 번호 가져오기
+        page_obj = paginator.get_page(page_number)  # 해당 페이지 객체 가져오기
+
+        context['page_obj'] = page_obj  # 페이지 객체 컨텍스트에 추가
+
+        return context
 
 
 class SearchView(generic.ListView):
@@ -36,13 +46,14 @@ class DetailView(generic.TemplateView):
 
     def get(self, request, pk, **kwargs):
         context = super().get_context_data(**kwargs)
-        user = steam.apps.get_app_details(pk)
+        user = requests.get(f"https://store.steampowered.com/api/appdetails?appids={pk}&l=korean")
+        data = user.json()
         try:
             context = {
-                'json_data': json.loads(user)[str(pk)]['data']
+                'json_data': data[str(pk)]['data']
             }
         except:
-            context = {'json_data': json.loads(user)[str(pk)]}
+            context = {'json_data': data[str(pk)]}
         return render(request, 'detail.html', context)
 
 

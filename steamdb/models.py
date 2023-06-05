@@ -1,3 +1,4 @@
+from django.contrib.humanize.templatetags.humanize import intcomma
 from django.db import models
 
 
@@ -8,6 +9,17 @@ class App(models.Model):
 
     id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=100)
+    header_image = models.TextField(default="{% static 'header_image.jpg' %}")
+    capsule_image = models.TextField(default="{% static 'header_image.jpg' %}")
+    is_free = models.BooleanField(null=True)
+    initial_price = models.IntegerField(null=True)
+    discount_percent = models.IntegerField(null=True)
+    final_price = models.IntegerField(null=True)
+
+    def save(self, *args, **kwargs):
+        self.initial_price = intcomma(self.initial_price, use_l10n=False).replace(',', '')
+        self.final_price = intcomma(self.final_price, use_l10n=False).replace(',', '')
+        super().save(*args, **kwargs)
 
 
 class Rank(models.Model):
