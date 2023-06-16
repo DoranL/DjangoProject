@@ -29,24 +29,34 @@
             <section>
                 <div style="border: 3px solid #ccc; padding: 10px;">
                     <ul style="display: flex; align-items: center;">
+                        {% for app in apps %}
+                            {% endfor %}
                         <li style="margin-right: 150px;">
-                            <img src="{{ json_data.header_image }}" alt="헤더" style="max-width: 550px; height: 350px; border: 3px solid #ccc;">
+                            {% if json_data %}
+                                <img src="{{ json_data.header_image }}" alt="헤더" style="max-width: 550px; height: 350px; border: 3px solid #ccc;">
+                            {% else %}
+                                <img src="{% static 'default_header.jpg' %}" alt="헤더" style="max-width: 550px; height: 350px; border: 3px solid #ccc;">
+                            {% endif %}
                         </li>
                         <li>
-                            <h1>{{ json_data.name }}</h1>
-                            <h4>출시일: {{ json_data.release_date.date }}</h4>
-                            {% if json_data.is_free %}
-                                <h4>가격: 무료</h4>
-                            {% elif json_data.price_overview.discount_percent > 0 %}
-                                <h4>
-                                    <s>{{ json_data.price_overview.initial_formatted }}</s>
-                                    → <b>{{ json_data.price_overview.final_formatted }}</b>
-                                    ({{ json_data.price_overview.discount_percent }}%)
-                                </h4>
+                            {% if json_data %}
+                                <h1>{{ json_data.name }}</h1>
+                                <h4>출시일: {{ json_data.release_date.date }}</h4>
+                                {% if json_data.is_free %}
+                                    <h4>가격: 무료</h4>
+                                {% elif json_data.price_overview.discount_percent > 0 %}
+                                    <h4>
+                                        <s>{{ json_data.price_overview.initial_formatted }}</s>
+                                        → <b>{{ json_data.price_overview.final_formatted }}</b>
+                                        ({{ json_data.price_overview.discount_percent }}%)
+                                    </h4>
+                                {% else %}
+                                    <h4>가격: {{ json_data.price_overview.final_formatted }}</h4>
+                                {% endif %}
+                                <a href="https://store.steampowered.com/app/{{ json_data.steam_appid }}" style="color: #040303;">다운로드</a>
                             {% else %}
-                                <h4>가격: {{ json_data.price_overview.final_formatted }}</h4>
+                                <h1>게임 정보를 불러올 수 없습니다.</h1>
                             {% endif %}
-                            <a href="https://store.steampowered.com/app/{{ json_data.steam_appid }}" style="color: #040303;">다운로드</a>
                         </li>
                     </ul>
                 </div>

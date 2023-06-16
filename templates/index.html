@@ -20,7 +20,7 @@
 <section>
     <h2>저장된 게임 목록</h2>
     <ul>
-        {% for app in page_obj %}
+        {% for app in apps %}
             <li>
                 <a href="{% url 'detail' app.id %}">
                     <img src="{{ app.capsule_image }}"> {{ app.id }}: {{ app.name }}

@@ -3,34 +3,32 @@ import requests
 
 from django.db.models import Q
 from django.shortcuts import render
-from django.views import generic
+from django.views import generic, View
 from django.core.paginator import Paginator
 from .models import App, Rank
 
 
 # Create your views here.
-class IndexView(generic.ListView):
-    model = App
-    template_name = "index.html"
-    paginate_by = 10
+class IndexView(View):
+    def get(self, request):
+        page = request.GET.get("page", 1)
+        start = (page - 1) * 10
+        end = page * 10
+        apps = []
+        for app in App.objects.all()[start:end]:
+            user = requests.get(
+                f"https://store.steampowered.com/api/appdetails?appids={app.id}&l=korean"
+            )
+            app.save()
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
+            apps.append(user.json())
 
-        queryset = self.get_queryset()  # 모델의 쿼리셋 가져오기
-        paginator = Paginator(queryset, self.paginate_by)  # Paginator 객체 생성
-
-        page_number = self.request.GET.get('p')  # 'p'라는 이름의 페이지 번호 가져오기
-        page_obj = paginator.get_page(page_number)  # 해당 페이지 객체 가져오기
-
-        context['page_obj'] = page_obj  # 페이지 객체 컨텍스트에 추가
-
-        return context
+        return render(request, "index.html", {"apps": apps})
 
 
 class SearchView(generic.ListView):
     model = App
-    template_name = 'search.html'
+    template_name = "search.html"
 
     def get_queryset(self):
         query = self.request.GET.get("q")
@@ -40,34 +38,54 @@ class SearchView(generic.ListView):
         return object_list
 
 
-class DetailView(generic.TemplateView):
-    template_name = "detail.html"
-    # 데이터 불러오기
-
+class DetailView(View):
     def get(self, request, pk, **kwargs):
-        context = super().get_context_data(**kwargs)
-        user = requests.get(f"https://store.steampowered.com/api/appdetails?appids={pk}&l=korean")
+        context = {}
+        user = requests.get(
+            f"https://store.steampowered.com/api/appdetails?appids={pk}&l=korean"
+        )
         data = user.json()
         try:
-            context = {
-                'json_data': data[str(pk)]['data']
-            }
+            context = {"json_data": data[str(pk)]["data"]}
         except:
-            context = {'json_data': data[str(pk)]}
-        return render(request, 'detail.html', context)
+            context = {"json_data": data[str(pk)]}
+        return render(request, "detail.html", context)
 
 
-class HomeView(generic.ListView):
-    model = Rank
-    template_name = "home.html"
-    context_object_name = "info_list"
+class HomeView(View):
+    def get(self, request):
+        page = request.GET.get("page", 1)
+        start = (page - 1) * 30
+        end = page * 30
+        apps = []
+        for app in Rank.objects.all()[start:end]:
+            user = requests.get(
+                f"https://store.steampowered.com/api/appdetails?appids={app.app.id}&l=korean"
+            )
+            app.save()
+
+            apps.append(user.json()[str(app.app.id)])
+
+        return render(request, "home.html", {"apps": apps})
 
 
-class RankView(generic.ListView):
-    model = Rank
-    template_name = "rank.html"
+class RankView(View):
+    def get(self, request):
+        page = request.GET.get("page", 1)
+        start = (page - 1) * 30
+        end = page * 30
+        apps = []
+        for app in Rank.objects.all()[start:end]:
+            user = requests.get(
+                f"https://store.steampowered.com/api/appdetails?appids={app.app.id}&l=korean"
+            )
+            app.save()
+
+            apps.append(user.json()[str(app.app.id)])
+
+        return render(request, "rank.html", {"apps": apps})
 
 
 class SaleView(generic.ListView):
     model = App
-    template_name = 'sale.html'
+    template_name = "sale.html"
