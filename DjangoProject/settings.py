@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'steamdb',
+    'django.contrib.humanize',
+    'steamdb.apps.SteamdbConfig',
 ]
 
 MIDDLEWARE = [
