@@ -13,28 +13,35 @@ from .models import App, Rank
 class IndexView(View):
     def get(self, request):
         page = self.request.GET.get("page", 1)
-        paginator = Paginator(App.objects.all(), 10)
+        paginator = Paginator(App.objects.all(), 30)
         page_obj = paginator.get_page(page)
         for app in page_obj:
-            if app.type is None:
+            if app.type != 'game':
                 user = requests.get(
                     f"https://store.steampowered.com/api/appdetails?appids={app.id}&l=korean"
                 )
                 json_data = user.json()[str(app.id)]
                 if json_data['success']:
-                    try:
-                        app.initial_price = int(str(json_data['data']['price_overview']["initial"])[:-2])
-                        app.discount_percent = json_data['data']['price_overview']["discount_percent"]
-                        app.final_price = int(str(json_data['data']['price_overview']["final"])[:-2])
-                    except:
-                        traceback.format_exc()
-                    finally:
-                        app.type = json_data['data']["type"]
-                        app.short_description = json_data['data']["short_description"]
-                        app.header_image = json_data['data']["header_image"]
-                        app.capsule_image = json_data['data']["capsule_image"]
-                        app.is_free = json_data['data']["is_free"]
-                        app.save()
+                    if json_data['data']["type"] == 'game':
+                        try:
+                            app.initial_price = int(str(json_data['data']['price_overview']["initial"])[:-2])
+                            app.discount_percent = json_data['data']['price_overview']["discount_percent"]
+                            app.final_price = int(str(json_data['data']['price_overview']["final"])[:-2])
+                        except:
+                            traceback.format_exc()
+                        finally:
+                            app.type = json_data['data']["type"]
+                            app.short_description = json_data['data']["short_description"]
+                            app.header_image = json_data['data']["header_image"]
+                            app.capsule_image = json_data['data']["capsule_image"]
+                            app.is_free = json_data['data']["is_free"]
+                            app.save()
+                    else:
+                        app.delete()
+                else:
+                    app.delete()
+            elif app.final_price is None and not app.is_free:
+                app.delete()
         context = {'page_obj': page_obj}
 
         return render(request, "index.html", context)
