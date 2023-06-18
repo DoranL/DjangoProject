@@ -16,12 +16,12 @@ class IndexView(View):
         paginator = Paginator(App.objects.all(), 10)
         page_obj = paginator.get_page(page)
         for app in page_obj:
-            user = requests.get(
-                f"https://store.steampowered.com/api/appdetails?appids={app.id}&l=korean"
-            )
-            json_data = user.json()[str(app.id)]
-            if json_data['success']:
-                if app.type is None:
+            if app.type is None:
+                user = requests.get(
+                    f"https://store.steampowered.com/api/appdetails?appids={app.id}&l=korean"
+                )
+                json_data = user.json()[str(app.id)]
+                if json_data['success']:
                     try:
                         app.initial_price = int(str(json_data['data']['price_overview']["initial"])[:-2])
                         app.discount_percent = json_data['data']['price_overview']["discount_percent"]

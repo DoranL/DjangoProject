@@ -28,9 +28,9 @@
                         {% if app.is_free %}
                             무료
                         {% elif app.discount_percent is 0 %}
-                            \ {{ app.final_price|intcomma }}
+                            ￦ {{ app.final_price|intcomma }}
                         {% else %}
-                            <s>\ {{ app.initial_price|intcomma }}</s> → \ {{ app.final_price|intcomma }} ({{ app.discount_percent }}%)
+                            <s>￦ {{ app.initial_price|intcomma }}</s> → ￦ {{ app.final_price|intcomma }} ({{ app.discount_percent }}%)
                         {% endif %}
                     </a>
                 </li>
